@@ -1,5 +1,6 @@
-from cvtransit.models.commuter import Commuter
+from cvtransit.models.commuter import Commuter  # type: ignore
 import unittest
+
 
 class TestCommuter(unittest.TestCase):
 

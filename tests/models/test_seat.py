@@ -1,5 +1,6 @@
-from cvtransit.models.seat import Seat
+from cvtransit.models.seat import Seat  # type: ignore
 import unittest
+
 
 class TestSeat(unittest.TestCase):
 

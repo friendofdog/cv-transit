@@ -1,5 +1,6 @@
-from cvtransit.models.row import Row
+from cvtransit.models.row import Row  # type: ignore
 import unittest
+
 
 class TestRow(unittest.TestCase):
 

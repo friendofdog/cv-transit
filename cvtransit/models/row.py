@@ -1,4 +1,5 @@
-from cvtransit.models.seat import Seat
+from cvtransit.models.seat import Seat  # type: ignore
+
 
 class Row:
 
