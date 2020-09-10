@@ -1,11 +1,11 @@
-from cvtransit.models.row import Row
+from cvtransit.models.car import Car
 
 
-def initialise_row(seat_count):
-    row = Row(seat_count)
-    row.set_occupancy()
-    return row
+def initialise_car(seat_count):
+    car = Car(seat_count)
+    car.set_seats()
+    return car
 
 
 def app(**config):
-    initialise_row(config['seat_count'])
+    initialise_car(config['seat_count'])
