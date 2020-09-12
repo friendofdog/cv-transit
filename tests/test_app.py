@@ -9,5 +9,4 @@ class TestApp(unittest.TestCase):
 
     def test_initialise_app_creates_list_of_seats(self):
         initialised_app = initialise_car(5)
-        seats = initialised_app.get_seats()
-        self.assertEqual(len(seats), 5)
+        initialised_app.get_seats()
