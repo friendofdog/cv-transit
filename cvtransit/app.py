@@ -1,4 +1,12 @@
+import time
 from cvtransit.models.car import Car
+from cvtransit.cycle import (
+    decrement_commuter_duration,
+    unseat_expired_commuters,
+    set_seat_threat,
+    set_seat_exposure,
+    seat_commuters
+)
 
 
 def initialise_car(seat_count):
@@ -7,5 +15,17 @@ def initialise_car(seat_count):
     return car
 
 
+def handle_cycle(car):
+    decrement_commuter_duration(car)
+    unseat_expired_commuters(car)
+    set_seat_threat(car)
+    set_seat_exposure(car)
+    seat_commuters()
+
+
 def app(**config):
-    initialise_car(config['seat_count'])
+    car = initialise_car(int(config['seat_count']))
+
+    while True:
+        handle_cycle(car)
+        time.sleep(1)
