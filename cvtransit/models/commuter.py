@@ -4,8 +4,8 @@ import random
 class Commuter:
 
     def __init__(self, duration, nomask):
-        self._mask = True
         self._duration = duration
+        self._mask = True
         self._nomask = nomask
 
     def get_mask(self):
@@ -17,5 +17,5 @@ class Commuter:
     def get_duration(self):
         return self._duration
 
-    def set_duration(self):
+    def decrement_duration(self):
         self._duration -= 1

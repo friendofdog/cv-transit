@@ -14,6 +14,6 @@ class TestCommuter(unittest.TestCase):
         self.assertEqual(type(self.commuter.get_mask()), bool)
 
     def test_set_duration_reduces_duration_by_one(self):
-        self.commuter.set_duration()
+        self.commuter.decrement_duration()
         final = self.commuter.get_duration()
         self.assertEqual(self.duration - 1, final)
