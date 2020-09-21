@@ -28,7 +28,4 @@ class Seat:
         return self._commuter
 
     def set_commuter(self, commuter):
-        if type(commuter) is Commuter:
-            self._commuter = commuter
-        else:
-            raise TypeError(f'{commuter} is not an instance of Commuter')
+        self._commuter = commuter
