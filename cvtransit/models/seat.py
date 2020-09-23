@@ -1,6 +1,3 @@
-from cvtransit.models.commuter import Commuter
-
-
 class Seat:
 
     def __init__(self):
@@ -12,10 +9,6 @@ class Seat:
         return self._exposure
 
     def set_exposure(self, adj):
-        if len(adj) not in [1, 2]:
-            raise ValueError(f"Expected length 1 or 2, got {len(adj)}")
-        if not all(isinstance(x, int) for x in adj):
-            raise TypeError(f"{adj} was given, expected list of integers")
         self._exposure = sum([i for i in adj])
 
     def get_threat(self):
