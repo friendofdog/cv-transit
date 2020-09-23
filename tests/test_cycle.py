@@ -15,14 +15,15 @@ class TestCycle(unittest.TestCase):
         super(TestCycle, self).__init__(*args, **kwargs)
 
     def test_decrement_time_decreases_commuter_duration_by_one(self):
-        car = make_dummy_car_obj([3, 2, 1])
+        commuters = [(3, 10), (5, 0), (1, 0)]
+        car = make_dummy_car_obj(commuters)
         initial = [d.get_duration() for d in car.get_commuters()]
         decrement_commuter_duration(car)
         final = [d.get_duration() for d in car.get_commuters()]
         self.assertEqual(final, [d - 1 for d in initial])
 
     def test_unseat_expired_commuters_removes_commuter_if_duration_zero(self):
-        commuters = [2, 1, 0]
+        commuters = [(2, 10), (1, 0), (0, 0)]
         car = make_dummy_car_obj(commuters)
         unseat_expired_commuters(car)
         self.assertEqual(len(car.get_commuters()), len(commuters) - 1)

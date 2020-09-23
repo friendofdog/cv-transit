@@ -2,12 +2,12 @@ from cvtransit.models.car import Car
 from cvtransit.models.commuter import Commuter
 
 
-def make_dummy_car_obj(durations):
-    count = len(durations) * 2
+def make_dummy_car_obj(commuters):
+    count = len(commuters) * 2
     car = Car(count)
     car.set_seats()
-    for d in durations:
-        car.add_commuter(Commuter(d, 0))
+    for c in commuters:
+        car.add_commuter(Commuter(c[0], c[1]))
     return car
 
 
