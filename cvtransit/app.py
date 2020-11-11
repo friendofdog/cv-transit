@@ -9,6 +9,9 @@ from cvtransit.cycle import (
 )
 
 
+BASE_THREAT = 100
+
+
 def initialise_car(seat_count):
     car = Car(seat_count)
     car.set_seats()
@@ -18,9 +21,9 @@ def initialise_car(seat_count):
 def handle_cycle(car):
     decrement_commuter_duration(car)
     unseat_expired_commuters(car)
-    set_seat_threat(car)
+    set_seat_threat(car, BASE_THREAT)
     set_seat_exposure(car)
-    seat_commuters()
+    seat_commuters(car, BASE_THREAT)
 
 
 def app(**config):

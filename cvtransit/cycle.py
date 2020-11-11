@@ -1,6 +1,3 @@
-BASE_THREAT = 100  # temporary, move to config file
-
-
 def _find_lowest_exposure(seats):
     vacant = [s for s in seats if not s.get_commuter()]
     if not vacant:
@@ -39,7 +36,7 @@ def set_seat_exposure(car):
         s.set_exposure(adjecent)
 
 
-def seat_commuters(car):
+def seat_commuters(car, base_threat):
     standing = [c for c in car.get_commuters()
                 if c not in [s.get_commuter() for s in car.get_seats()]]
     standing = sorted(standing, key=lambda s: s.get_duration(), reverse=True)
@@ -52,6 +49,6 @@ def seat_commuters(car):
             identify the lowest exposed seat.
             """
             lowest[0].set_commuter(s)
-            lowest[0].set_threat(s.get_duration(), BASE_THREAT)
+            lowest[0].set_threat(s.get_duration(), base_threat)
         else:
             continue

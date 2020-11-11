@@ -7,9 +7,7 @@ from cvtransit.cycle import (
     set_seat_exposure,
     seat_commuters
 )
-
-
-BASE_THREAT = 100  # temporary, move to config file
+from cvtransit.app import BASE_THREAT
 
 
 class TestCycle(unittest.TestCase):
@@ -21,6 +19,7 @@ class TestCycle(unittest.TestCase):
                           (11, 0), (10, 0)]
         self.standing = self.commuters[:-stand_count]
         self.car = make_dummy_car_obj(self.commuters, -stand_count)
+        self.base_threat = BASE_THREAT
         populate_dummy_car_seats(self.car, -stand_count)
 
     def test_decrement_time_decreases_commuter_duration_by_one(self):
@@ -36,21 +35,21 @@ class TestCycle(unittest.TestCase):
             len(self.car.get_commuters()), len(self.commuters) - 1)
 
     def test_set_seat_threat_sets_seat_threat_prop(self):
-        set_seat_threat(self.car, BASE_THREAT)
+        set_seat_threat(self.car, self.base_threat)
         threat = [t.get_threat() for t in self.car.get_seats()]
         expected = [0] * (len(self.standing) * 2 - 1)
-        expected[0::2] = [d[0] * BASE_THREAT for d in self.standing]
+        expected[0::2] = [d[0] * self.base_threat for d in self.standing]
         self.assertEqual(threat, expected)
 
     def test_set_seat_exposure_sets_seat_exposure_prop(self):
-        set_seat_threat(self.car, BASE_THREAT)  # depends on another method
+        set_seat_threat(self.car, self.base_threat)  # depends on other method
         set_seat_exposure(self.car)
         exposure = [s.get_exposure() for s in self.car.get_seats()]
         expected = [0] * (len(self.standing) * 2 - 1)
         commuters = [i for i, d in enumerate(self.standing)]
         commuters.pop()
         expected[1::2] = [(self.commuters[c][0] + self.commuters[c+1][0]) *
-                          BASE_THREAT for c in commuters]
+                          self.base_threat for c in commuters]
         self.assertEqual(exposure, expected)
 
     def test_seat_commuters_appends_to_seat_seats_prop(self):
@@ -60,10 +59,10 @@ class TestCycle(unittest.TestCase):
         not have a programmatic way of constructing an expected. Include these
         things when completing this test.
         """
-        set_seat_threat(self.car, BASE_THREAT)  # depends on another method
+        set_seat_threat(self.car, self.base_threat)  # depends on other method
         set_seat_exposure(self.car)  # depends on another method
         print([c.get_commuter().get_duration() for c in self.car.get_seats()
                if c.get_commuter()])
-        seat_commuters(self.car)
+        seat_commuters(self.car, self.base_threat)
         print([c.get_commuter().get_duration() for c in self.car.get_seats()])
         pass
