@@ -12,23 +12,41 @@ from cvtransit.cycle import (
 BASE_THREAT = 100
 
 
-def initialise_car(seat_count):
-    car = Car(seat_count)
-    car.set_seats()
-    return car
+class App(object):
+
+    def __init__(self, **config):
+        self.car = self._initialise_car(config["seat_count"])
+        self.duration = config["duration"]
+        self.running = False
+
+    def _initialise_car(self, seat_count):
+        car = Car(seat_count)
+        car.set_seats()
+        return car
+
+    def _handle_cycle(self):
+        decrement_commuter_duration(self.car)
+        unseat_expired_commuters(self.car)
+        set_seat_threat(self.car, BASE_THREAT)
+        set_seat_exposure(self.car)
+        seat_commuters(self.car, BASE_THREAT)
+
+    def start(self):
+        self.running = True
+
+        while self.running:
+            self.duration -= 1
+            self._handle_cycle()
+            time.sleep(1)
+            if self.duration == 0:
+                self.running = False
 
 
-def handle_cycle(car):
-    decrement_commuter_duration(car)
-    unseat_expired_commuters(car)
-    set_seat_threat(car, BASE_THREAT)
-    set_seat_exposure(car)
-    seat_commuters(car, BASE_THREAT)
-
-
-def app(**config):
-    car = initialise_car(int(config['seat_count']))
-
-    while True:
-        handle_cycle(car)
-        time.sleep(1)
+if __name__ == "__main__":
+    get_duration = int(input('Enter time of commute in seconds: '))
+    get_seat_count = int(input('Enter seat count: '))
+    app = App(
+        duration=get_duration,
+        seat_count=get_seat_count
+    )
+    app.start()

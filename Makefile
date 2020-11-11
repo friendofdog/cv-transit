@@ -14,3 +14,6 @@ lint:
 type-check:
 	python3 -m mypy tests/*.py tests/**/*.py \
 	cvtransit/*.py cvtransit/**/*.py
+
+run:
+	python3 -m cvtransit.app
